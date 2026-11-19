@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>クイズ-出羽地区こども水害対策</title>
+    <link rel="stylesheet" href="style3.css">
+</head>
+<body class="subpage">
+
+<header>
+        <a href="html3.html" class="header-title">
+            <h2>出羽地区<br>こども水害対策</h2>
+        </a>
+    <nav class="gMenu">
+        <input class="menu-btn" type="checkbox" id="menu-btn">
+        <label class="menu-icon" for="menu-btn">
+          <span class="navicon"></span>
+        </label>
+        <ul class="menu">
+          <li><a href="html3.html">▸ホーム</a></li>
+          <li><a href="siru.html">▸知る</a></li>
+          <li><a href="sonaeru.html">▸備える</a></li>
+          <li><a href="koudou.html">▸行動</a></li>
+          <li><a href="kuizu.html">▸クイズ</a></li>
+          <li><a href="mosimo.html">▸もしも</a></li>
+        </ul>
+    </nav>
+</header>
+
+<section class="見出し">
+    <h1>クイズ</h1>
+</section>
+
+<main>
+    <section class="説明">
+        <h2>水害の防災についてクイズをしよう</h2>
+    </section>
+
+    <!-- クイズ本体エリア -->
+    <div class="quiz-container">
+        <div class="quiz-header">
+            <h3> 越谷市水害クイズ /h3>
+            <div class="question-number" id="q-num">第 1 問 / 全30問</div>
+        </div>
+
+        <div class="question-text" id="q-text">読み込み中...</div>
+
+        <div class="option-list" id="options-container">
+            <!-- 選択肢ボタンが自動生成されます -->
+        </div>
+
+        <!-- 解説エリア（ここに「つぎの問題へ」ボタンを追加） -->
+        <div class="explanation-box" id="explanation-box">
+            <div class="result-title" id="result-title"></div>
+            <strong>正解：<span id="correct-answer"></span></strong>
+            <p class="explanation-text" id="explanation-text"></p>
+            
+            <div class="next-btn-container">
+                <button id="next-btn" class="btn-next" onclick="nextQuiz()">つぎの問題へ ▶</button>
+            </div>
+        </div>
+
+        <div class="back-container">
+            <a href="html3.html" class="btn-back"> トップページへもどる</a>
+        </div>
+    </div>
+</main>
+<script src="quizData.js"></script>
+<script>
+    let shuffledQuiz = []; // ランダムに選ばれた5問
+    let currentQuiz = 0;   // 現在の進行度（0〜4）
+    let score = 0;         // 正解数
+
+    // HTMLの初期表示枠（もう一度挑戦する時に元に戻すため保存）
+    const initialQuizHTML = `
+        <div class="quiz-header">
+            <h3>越谷市水害クイズ</h3>
+            <div class="question-number" id="q-num">第 1 問 / 全5問</div>
+        </div>
+        <div class="question-text" id="q-text">読み込み中...</div>
+        <div class="option-list" id="options-container"></div>
+        <div class="explanation-box" id="explanation-box">
+            <div class="result-title" id="result-title"></div>
+            <strong>正解：<span id="correct-answer"></span></strong>
+            <p class="explanation-text" id="explanation-text"></p>
+            <div class="next-btn-container">
+                <button id="next-btn" class="btn-next" onclick="nextQuiz()">つぎの問題へ ▶</button>
+            </div>
+        </div>
+        <div class="back-container">
+            <a href="html3.html" class="btn-back">トップページへもどる</a>
+        </div>
+    `;
+
+    // クイズの初期化（5問をランダム抽出して1問目へ）
+    function initQuiz() {
+        const quizContainer = document.querySelector('.quiz-container');
+        // 結果画面から元のHTML構造を復元
+        quizContainer.innerHTML = initialQuizHTML;
+
+        // 全30問からランダムに5問を抽出
+        shuffledQuiz = [...quizData].sort(() => Math.random() - 0.5).slice(0, 5);
+        currentQuiz = 0;
+        score = 0;
+        loadQuiz();
+    }
+
+    function loadQuiz() {
+        const data = shuffledQuiz[currentQuiz];
+        
+        // 問題番号とテキストの更新
+        document.getElementById('q-num').textContent = `第 ${currentQuiz + 1} 問 / 全5問`;
+        document.getElementById('q-text').textContent = `${currentQuiz + 1}. ${data.question}`;
+        
+        // 解説エリアを非表示
+        const expBox = document.getElementById('explanation-box');
+        expBox.style.display = 'none';
+
+        // 選択肢ボタンの生成
+        const optionsContainer = document.getElementById('options-container');
+        optionsContainer.innerHTML = '';
+
+        data.options.forEach((opt) => {
+            const btn = document.createElement('button');
+            btn.className = 'option-btn';
+            btn.textContent = opt;
+            btn.onclick = () => checkAnswer(opt.charAt(0), data);
+            optionsContainer.appendChild(btn);
+        });
+    }
+
+    function checkAnswer(selectedOption, data) {
+        const expBox = document.getElementById('explanation-box');
+        const resultTitle = document.getElementById('result-title');
+        const correctAnswer = document.getElementById('correct-answer');
+        const expText = document.getElementById('explanation-text');
+        const nextBtn = document.getElementById('next-btn');
+
+        // ボタンの連打防止
+        const buttons = document.querySelectorAll('.option-btn');
+        buttons.forEach(btn => btn.disabled = true);
+
+        // 正誤判定とスコア加算
+        if (selectedOption === data.answer) {
+            resultTitle.textContent = "⭕ 正解！";
+            resultTitle.className = "result-title correct";
+            score++;
+        } else {
+            resultTitle.textContent = "❌ 残念...";
+            resultTitle.className = "result-title incorrect";
+        }
+
+        correctAnswer.textContent = `${data.answer}`;
+        expText.textContent = data.explanation;
+
+        // 5問目の場合はボタンテキストを変更
+        if (currentQuiz === 4) {
+            nextBtn.textContent = " 結果を見る ▶";
+        } else {
+            nextBtn.textContent = "つぎの問題へ ▶";
+        }
+
+        expBox.style.display = 'block';
+    }
+
+    function nextQuiz() {
+        if (currentQuiz < 4) {
+            currentQuiz++;
+            loadQuiz();
+            document.querySelector('.quiz-container').scrollIntoView({ behavior: 'smooth' });
+        } else {
+            showFinalResult();
+        }
+    }
+
+  
+    function showFinalResult() {
+        const quizContainer = document.querySelector('.quiz-container');
+        const accuracy = Math.round((score / 5) * 100);
+
+        quizContainer.innerHTML = `
+            <div class="result-score-container" style="text-align: center; padding: 20px 0;">
+                <h2 style="color: #0088cc; font-size: 26px; margin-bottom: 10px;">クイズ終了！ </h2>
+                <p style="font-size: 18px; font-weight: bold; margin-bottom: 20px;">あなたの防災レベル判定</p>
+                
+                <div style="background: #e6f7ff; border: 2px solid #0088cc; border-radius: 12px; padding: 20px; margin-bottom: 25px;">
+                    <p style="font-size: 20px; margin: 0 0 10px 0;">正解数: <strong style="font-size: 28px; color: #ff5500;">${score}</strong> / 5 問</p>
+                    <p style="font-size: 24px; font-weight: bold; color: #0088cc; margin: 0;">正答率: <span style="font-size: 36px; color: #28a745;">${accuracy}%</span></p>
+                </div>
+
+                <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+                    <button onclick="initQuiz()" class="btn-next" style="background: linear-gradient(135deg, #28a745 0%, #208335 100%); cursor: pointer;">もう一度挑戦する </button>
+                    <a href="html3.html" class="btn-back" style="padding: 12px 24px; border-radius: 25px;"> トップページへ</a>
+                </div>
+            </div>
+        `;
+        document.querySelector('.quiz-container').scrollIntoView({ behavior: 'smooth' });
+    }
+
+
+    initQuiz();
+</script>
+<footer>
+    <p>&copy; 2026 出羽地区こども水害対策</p>
+</footer>
+
+
+
+</body>
+</html>
