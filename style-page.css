@@ -1,0 +1,266 @@
+body {
+    padding-top: 130px; 
+}
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #50BFE6;
+    color: white;
+    text-align: center;
+    padding: 15px 0;
+    z-index: 1000;
+    box-sizing: border-box;
+    border-bottom: 3px solid #ffffff;
+}
+
+header h2 {
+    margin: 0;
+    font-size: 20px;
+    letter-spacing: 2px;
+}
+
+.header-title {
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.header-title h2 {
+    margin: 0;
+}
+
+.page-image {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.page-image img {
+    display: block;
+    margin: 0 auto !important;
+}
+
+.page section{
+    max-width: 900px;
+
+    margin: 15px auto 30px;
+    padding: 20px 30px 20px 45px;
+
+    background-color: #ffffff;
+
+    border-radius: 10px;
+
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+
+    box-sizing: border-box;
+}
+
+.page {
+    padding-bottom: 80px;
+}
+
+.page-image img {
+    display: block;
+    margin: 0 auto 40px !important;
+}
+
+.tchui {
+    max-width: 600px;
+    margin: 5px auto 20px;
+    text-align: right;
+    font-size: 12px;
+    color: #666;
+}
+
+
+.page .irasuto {
+    display: block;
+    width: 600px;
+    max-width: 100%;
+    height: auto;
+    margin: 30px auto !important;
+}
+
+.page .kisyo{
+    display: block;
+    width: 800px;
+    max-width: 100%;
+    height: auto;
+    margin: 30px auto !important;
+}
+
+.irasuto2 {
+    display: block;
+    width: 250px;
+    max-width: 100%;
+    height: auto;
+    margin: 30px auto !important;
+}
+
+.page > h2 {
+    margin: 60px auto 25px;
+    padding: 15px 20px;
+
+    max-width: 900px;
+
+    font-size: 25px;
+    line-height: 1.5;
+
+    color: #0076ca;
+
+    border-left: 7px solid #0076ca;
+
+    box-sizing: border-box;
+}
+
+.page > h2:first-of-type {
+    margin-top: 0;
+}
+
+.page > h3 {
+    max-width: 900px;
+
+    margin: 25px auto 15px;
+
+    font-size: 21px;
+    line-height: 1.6;
+
+    color: #333;
+}
+
+.page > h4 {
+    max-width: 900px;
+
+    margin: 30px auto 10px;
+
+    font-size: 19px;
+    line-height: 1.5;
+
+    color: #0076ca;
+}
+
+.page > p {
+    max-width: 900px;
+
+    margin: 0 auto 20px;
+
+    font-size: 17px;
+    line-height: 2;
+
+    color: #333;
+}
+
+.page .subtitle {
+    text-align: center;
+}
+
+.page > ul li {
+    margin-bottom: 12px;
+
+    font-size: 16px;
+    line-height: 1.9;
+
+    color: #333;
+}
+
+
+.page > ul li:last-child {
+    margin-bottom: 0;
+}
+
+.page-image,
+.page .見出し,
+.page > h2,
+.page > h3,
+.page > h4,
+.page > p,
+.page section {
+    animation: siruFadeDown 0.7s ease-out both;
+}
+
+.page {
+    text-align: left;
+}
+
+@keyframes siruFadeDown {
+
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}
+
+@media screen and (max-width: 600px) {
+
+    .page {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .page .見出し {
+        padding-top: 10px;
+    }
+
+    .page .見出し h1 {
+        font-size: 38px;
+    }
+
+    .page .説明 {
+        margin-bottom: 40px;
+    }
+
+    .page .説明 h1 {
+        font-size: 22px;
+        line-height: 1.6;
+    }
+
+    .page > h2 {
+        margin: 45px 0 20px;
+        padding: 12px 15px;
+
+        font-size: 21px;
+    }
+
+    .page > h3 {
+        margin: 20px 5px 12px;
+
+        font-size: 18px;
+    }
+
+    .page > h4 {
+        margin: 25px 5px 8px;
+
+        font-size: 17px;
+    }
+
+    .page > p {
+        margin: 0 5px 20px;
+
+        font-size: 15px;
+        line-height: 1.9;
+    }
+
+    .page > ul {
+        margin: 10px 5px 25px;
+        padding: 15px 15px 15px 35px;
+    }
+
+
+    .page > ul li {
+        font-size: 15px;
+        line-height: 1.8;
+        margin-bottom: 10px;
+    }
+
+}
