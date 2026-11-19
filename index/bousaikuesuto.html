@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>備える-出羽地区こども水害対策</title>
+    <link rel="stylesheet" href="style3.css">
+    
+</head>
+
+<header>
+        <a href="html3.html" class="header-title">
+            <h2>出羽地区<br>こども水害対策</h2>
+        </a>
+    <nav class="gMenu">
+        <input class="menu-btn" type="checkbox" id="menu-btn">
+        <label class="menu-icon" for="menu-btn">
+          <span class="navicon"></span>
+        </label>
+        <ul class="menu">
+          <li><a href="html3.html">▸ホーム</a></li>
+          <li><a href="siru.html">▸知る</a></li>
+          <li><a href="sonaeru.html">▸備える</a></li>
+          <li><a href="koudou.html">▸行動</a></li>
+          <li><a href="kuizu.html">▸クイズ</a></li>
+          <li><a href="mosimo.html">▸もしも</a></li>
+        </ul>
+    </nav>
+</header>
+<head>
+    <meta charset="utf-8">
+   
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ぼうさいクエスト</title>
+    <style>
+        body { 
+            font-family: "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif; 
+            background-color: #e6f2ff; 
+            text-align: center; 
+            padding: 15px; 
+            margin: 0;
+        }
+        .game-box { 
+            background: white; 
+            border: 6px solid #2196f3; 
+            border-radius: 20px; 
+            padding: 20px; 
+            width: 90%; 
+            max-width: 450px; 
+            margin: 10px auto; 
+            box-shadow: 0 8px 0 #b3d7ff; 
+            box-sizing: border-box; 
+        }
+        h1 { color: #0d47a1; font-size: 1.5em; } 
+        
+        .item-list { text-align: left; display: block; margin: 20px auto; max-width: 250px; }
+        .item { font-size: 1.3em; margin: 20px 0; display: flex; align-items: center; cursor: pointer; color: #1565c0; } /* リストの文字も青系に変更 */
+        
+    
+        input[type="checkbox"] { width: 35px; height: 35px; margin-right: 15px; flex-shrink: 0; }
+        
+        .check-btn { 
+            background-color: #007bff; color: white; border: none;  
+            padding: 15px 0; 
+            width: 100%; 
+            max-width: 300px;
+            font-size: 1.4em; border-radius: 50px; 
+            box-shadow: 0 5px 0 #0056b3; cursor: pointer; font-weight: bold; /* ボタンの影を濃い青に変更 */
+            margin: 10px 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .check-btn:active { box-shadow: none; transform: translateY(5px); }
+
+        .exit-btn { background-color: #999; box-shadow: 0 5px 0 #666; }
+
+        
+        .btn-group {
+            display: flex;
+            flex-direction: column; 
+            align-items: center;
+        }
+
+        .congrats { font-size: 1.8em; color: #00bcd4; font-weight: bold; margin: 10px 0;}
+    </style>
+</head>
+<body>
+
+    <div id="setup-screen" class="game-box">
+        <h1> ぼうさいリュックを つくろう！</h1>
+        <p>じゅんびができたら<br>チェックしてね！</p>
+        
+        <div class="item-list">
+            <label class="item"><input type="checkbox" class="quest-check">  飲料水</label>
+            <label class="item"><input type="checkbox" class="quest-check">  食品</label>
+            <label class="item"><input type="checkbox" class="quest-check">  携帯トイレ</label>
+            <label class="item"><input type="checkbox" class="quest-check">  懐中電灯</label>
+            <label class="item"><input type="checkbox" class="quest-check">  モバイルバッテリー</label>
+            <label class="item"><input type="checkbox" class="quest-check">  救急用品</label>
+            <label class="item"><input type="checkbox" class="quest-check">  レインコート</label>
+            <label class="item"><input type="checkbox" class="quest-check">  軍手</label>
+        </div>
+
+        <button class="check-btn" onclick="finishQuest()">できた！</button>
+        <p id="alert-msg" style="color: #ff5722; font-weight: bold; min-height: 1.2em;"></p> 
+    </div>
+
+    <div id="master-screen" class="game-box" style="display: none; border-color: #00bcd4;"> 
+        <h1 style="font-size: 4em; margin: 10px 0;"></h1>
+        <div class="congrats">おめでとう！</div>
+        <p>きみは 今日から<br><b>ぼうさいマスター </b> だ！</p>
+        <p> リュックを<br>げんかんに おこう！</p>
+        
+        <div class="btn-group">
+            <button class="check-btn" onclick="location.reload()">もういちど</button>
+            <button class="check-btn exit-btn" onclick="quitGame()">やめる</button>
+        </div>
+    </div>
+
+    <script>
+        function finishQuest() {
+            const checks = document.querySelectorAll('.quest-check');
+            let count = 0;
+            checks.forEach(box => { if (box.checked) count++; });
+
+            if (count === checks.length) {
+                document.getElementById('setup-screen').style.display = 'none';
+                document.getElementById('master-screen').style.display = 'block';
+                window.scrollTo(0, 0); 
+            } else {
+                document.getElementById('alert-msg').innerText = "あと " + (checks.length - count) + " つ 足りないよ！";
+            }
+        }
+
+        function quitGame() {
+            document.body.innerHTML = `
+               <div style="margin-top:100px; padding:20px; text-align:center;">
+                    <button class="check-btn" onclick="location.href='html3.html'" style="max-width:250px; margin-top:20px;">
+                        はじめの画面にもどる
+                    </button>
+                </div>
+            `;
+            document.body.style.backgroundColor = "white";
+        }
+    </script>
+    </main>
+    </body>
+    <footer>
+    <p>c2026 出羽地区こども水害対策</p>
+</footer>
+</body>
