@@ -1,1 +1,0 @@
-# gomahuriko18
